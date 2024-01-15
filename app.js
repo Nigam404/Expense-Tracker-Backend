@@ -44,7 +44,7 @@ app.use(premiumRouter);
 app.use(forgotpasswordRouter);
 //if any not defined routes comes in...it will show login page.
 app.use((req, res) => {
-  console.log(req.url);
+  console.log("REQUESTING URL->", req.url);
   res.sendFile(path.join(__dirname, `public/${req.url}`));
 });
 
