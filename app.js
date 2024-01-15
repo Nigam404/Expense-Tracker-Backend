@@ -2,7 +2,7 @@ const express = require("express");
 const bodyparser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv").config();
-const helmet = require("helmet");
+// const helmet = require("helmet");
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
@@ -32,7 +32,7 @@ const accessLogStream = fs.createWriteStream(
 //middlewares
 app.use(cors());
 app.use(bodyparser.json());
-app.use(helmet()); //provide security through headers.
+// app.use(helmet({ contentSecurityPolicy: false })); //provide security through headers.
 app.use(morgan("combined", { stream: accessLogStream })); //used to log request information.
 
 //routes
@@ -42,6 +42,11 @@ app.use(purchaseRouter);
 app.use(userRouter);
 app.use(premiumRouter);
 app.use(forgotpasswordRouter);
+//if any not defined routes comes in...it will show login page.
+app.use((req, res) => {
+  console.log(req.url);
+  res.sendFile(path.join(__dirname, `public/${req.url}`));
+});
 
 //association
 User.hasMany(Expense);
