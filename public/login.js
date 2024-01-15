@@ -7,7 +7,7 @@ async function login(event) {
   };
 
   try {
-    let info = await axios.post("http://16.170.226.67:3000/login", obj);
+    let info = await axios.post("http://51.20.183.75:3000/login", obj);
     if (info.status == 200) {
       const resDiv = document.getElementById("result");
       resDiv.innerText = info.data.message;
@@ -33,7 +33,7 @@ forgotPwBtn.onclick = async () => {
   console.log(obj);
 
   const response = await axios.post(
-    "http://16.170.226.67:3000/password/forgotpassword",
+    "http://51.20.183.75:3000/password/forgotpassword",
     obj
   );
 };

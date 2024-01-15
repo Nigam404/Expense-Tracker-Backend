@@ -7,7 +7,7 @@ async function signup(event) {
     password: document.getElementById("password").value,
   };
   let response = await axios.post(
-    "http://16.170.226.67:3000/signup",
+    "http://51.20.183.75:3000/signup",
     signupObj
   );
   console.log("Data->", response);

@@ -16,10 +16,10 @@ async function createElement(obj) {
   deletebtn.appendChild(document.createTextNode("delete"));
   deletebtn.onclick = async () => {
     //deleting expense from expense table
-    await axios.delete(`http://16.170.226.67:3000/deleteExp/${obj.id}`);
+    await axios.delete(`http://51.20.183.75:3000/deleteExp/${obj.id}`);
 
     //subtracting deleted expense amount from total expense of user->user controller
-    await axios.post("http://16.170.226.67:3000/subtract-total-expense", obj, {
+    await axios.post("http://51.20.183.75:3000/subtract-total-expense", obj, {
       headers: { Authorization: token },
     });
 
@@ -43,7 +43,7 @@ async function addExpense() {
   };
   // Storing in DB.
   const insertedObj = await axios.post(
-    "http://16.170.226.67:3000/postExp",
+    "http://51.20.183.75:3000/postExp",
     obj,
     {
       headers: { Authorization: token },
@@ -51,7 +51,7 @@ async function addExpense() {
   );
 
   //updating total expense->user controller.
-  await axios.post("http://16.170.226.67:3000/update-total-expense", obj, {
+  await axios.post("http://51.20.183.75:3000/update-total-expense", obj, {
     headers: { Authorization: token },
   });
 
@@ -61,7 +61,7 @@ async function addExpense() {
 
 //Below code will execute always when dom get reloaded....................................................
 window.addEventListener("DOMContentLoaded", async () => {
-  const res = await axios.get("http://16.170.226.67:3000/getExp", {
+  const res = await axios.get("http://51.20.183.75:3000/getExp", {
     headers: { Authorization: token },
   });
 
@@ -119,7 +119,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   //...pagination end...
 
   //checking if the logged in user is a premium member or not.
-  const user = await axios.get(`http://16.170.226.67:3000/getuser`, {
+  const user = await axios.get(`http://51.20.183.75:3000/getuser`, {
     headers: { Authorization: token },
   });
 
@@ -140,7 +140,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 //Buy-premium button click event..............................................................................
 document.getElementById("rzp-btn").onclick = async () => {
   const response = await axios.get(
-    "http://16.170.226.67:3000/purchase/premiummembership",
+    "http://51.20.183.75:3000/purchase/premiummembership",
 
     { headers: { Authorization: token } }
   );
@@ -152,7 +152,7 @@ document.getElementById("rzp-btn").onclick = async () => {
     //this handler will handle the success payment.
     handler: async () => {
       await axios.post(
-        "http://16.170.226.67:3000/purchase/update-transaction-status-success",
+        "http://51.20.183.75:3000/purchase/update-transaction-status-success",
         {
           order_id: options.order_id,
           payment_id: response.razorpay_payment_id,
@@ -174,7 +174,7 @@ document.getElementById("rzp-btn").onclick = async () => {
   rz_pay.on("payment.failed", async () => {
     let orderObj = { order_id: response.data.order.id };
     await axios.post(
-      "http://16.170.226.67:3000/purchase/update-transaction-status-failed",
+      "http://51.20.183.75:3000/purchase/update-transaction-status-failed",
       orderObj,
       { headers: { Authorization: token } }
     );
@@ -194,7 +194,7 @@ document.getElementById("leaderboard-btn").onclick = async () => {
   UL.appendChild(h3);
 
   const userWithTotalExpenses = await axios.get(
-    "http://16.170.226.67:3000/premium/leaderboard-data"
+    "http://51.20.183.75:3000/premium/leaderboard-data"
   );
 
   userWithTotalExpenses.data.forEach((detail) => {
@@ -209,7 +209,7 @@ document.getElementById("leaderboard-btn").onclick = async () => {
 //download button click event.........................................................................
 document.getElementById("download").onclick = async () => {
   const response = await axios.get(
-    "http://16.170.226.67:3000/premium/download-report",
+    "http://51.20.183.75:3000/premium/download-report",
     { headers: { Authorization: token } }
   );
   console.log(response);
@@ -228,7 +228,7 @@ document.getElementById("download").onclick = async () => {
 document.getElementById("oldLinkBtn").onclick = async () => {
   // getting old link from report url table that belongs to current user.
   const response = await axios.get(
-    "http://16.170.226.67:3000/premium/get-old-links",
+    "http://51.20.183.75:3000/premium/get-old-links",
     {
       headers: { Authorization: token },
     }
